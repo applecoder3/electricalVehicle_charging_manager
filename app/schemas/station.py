@@ -9,8 +9,14 @@ class StationBase(BaseModel):
 class StationCreate(StationBase):
     pass
 
-class StationUpdate(BaseModel):
-    pass
+class StationUpdate(StationBase):
+    name: Optional[str] = None
+    location: Optional[str] = None
+    is_online: Optional[bool] = None
+    current_status: Optional[str] = None
+
+class StationDelete(BaseModel): 
+    id: int
 
 class StationResponse(StationBase):
     id: int
