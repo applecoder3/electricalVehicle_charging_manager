@@ -1,5 +1,7 @@
 from pydantic import BaseModel, ConfigDict 
-from typing import Optional
+from typing import Optional, List
+
+from app.schemas.session import SessionResponse
 
 class StationBase(BaseModel):
     name: str
@@ -21,6 +23,8 @@ class StationDelete(BaseModel):
 class StationResponse(StationBase):
     id: int
     current_status: str # e.g "available", "occupied", "offline"
+
+    sessions: List[SessionResponse]= []
 
     model_config = ConfigDict(from_attributes=True)
 

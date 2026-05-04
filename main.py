@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 
 # wiring up the API route from app.api station to the main application
-from app.api import stations
+from app.api import stations, sessions
 
 from app.db.database import engine, Base
 from app.models.station import Station
+from app.models.session import Session
 
 # Tells SQLAlchemy to create the tables in the database based on the models defined in the code
 Base.metadata.create_all(bind=engine)
@@ -15,6 +16,8 @@ app = FastAPI(title="EV Charging Manager API")
 # Add a prefix so every endpoint in stations file starts with /stations
 
 app.include_router(stations.router, prefix="/stations", tags=["Stations"])
+
+app.include_router(sessions.router, tags=["Sessions"])
 
 @app.get("/")
 def read_root():
