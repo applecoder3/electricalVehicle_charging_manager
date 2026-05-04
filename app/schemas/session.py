@@ -24,4 +24,7 @@ class SessionResponse(SessionBase):
     start_time: datetime
     end_time: Optional[datetime] = None
 
+    """variable Must be the same variable as what located in the session model"""
+    charge_duration: Optional[int] = None
+
     model_config = ConfigDict(from_attributes=True)

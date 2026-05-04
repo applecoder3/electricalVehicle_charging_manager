@@ -38,7 +38,7 @@ def end_charging_session(session_id: int, session_data: SessionEnd, db:Session =
     
     '''Ending an active charging session which will free up the station'''
 
-    #Find the session\
+    #Find the session
     session = db.query(SessionModel).filter(SessionModel.id == session_id).first()
     if not session:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -47,9 +47,16 @@ def end_charging_session(session_id: int, session_data: SessionEnd, db:Session =
     if session.end_time is not None:
         raise HTTPException(status_code=400, detail="This session has already ended.")
     
+    
     #Update the Session record 
     session.end_time = datetime.now(timezone.utc)
     session.end_battery_level = session_data.end_battery_level
+
+    #Checking to make sure battery is valid (the ending battery percentage is not lower than when it started and the ending battery percentage does not exceed 100 percent)
+    if session_data.end_battery_level < session.start_battery_level:
+        raise HTTPException(status_code=400, detail="Ending battery cannot be lower than starting battery.")
+    if session_data.end_battery_level > 100:
+        raise HTTPException(status_code=400, detail="Battery percentage cannot exceed 100.")
 
     # Find the parent station and update its status back to available
     station = db.query(StationModel).filter(StationModel.id == session.station_id).first()

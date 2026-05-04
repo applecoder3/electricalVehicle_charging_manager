@@ -18,3 +18,11 @@ class Session(Base):
 
     # This will tell sqlalchemy to connect this class to the Station class based on the station_id foreign key
     station = relationship("Station", back_populates="sessions")
+
+    #Logic for calculating the duration of a charge in total minutes
+    @property
+    def charge_duration(self) -> int | None:
+        if self.start_time and self.end_time:
+            time_diff = self.end_time - self.start_time
+            return int(time_diff.total_seconds()/60)
+        return None
