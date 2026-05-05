@@ -41,9 +41,16 @@ Prerequisites: You must have [Docker](https://www.docker.com/) and Docker Compos
 once the container is running, navigate to the interactive FastAPI UI to test the endpoints
 http://localhost:8000/docs
 
-V2 Roadmap & Future Enhancements
-The next phase of this project will focus on user-facing applications and cloud deployment: - Role-Based Access Control Frontend UI: Developing a web dashboard where Authorized Engineers/personel can view deep system analytics, full session histories, and backend diagnostics. - Providing a streamlined view for Standard Employees/Users to check station availability, physical locations, and current battery levels
+## V2 Roadmap & Future Enhancements
 
-        - Cloud Development: Migrate the Dockerized infrastrure from local development to a cloud provider to expose a public URL for remote access across multiple devices
+The next phase of this project will focus on user-facing applications and cloud deployment:
+
+1. **Role-Based Access Control Frontend UI**
+   Developing a web dashboard where Authorized Engineers/personel can view deep system analytics, full session histories, and backend diagnostics.
+
+   Providing a streamlined view for Standard Employees/Users to check station availability, physical locations, and current battery levels
+
+2. **Cloud Development**
+   Migrate the Dockerized infrastrure from local development to a cloud provider to expose a public URL for remote access across multiple devices
 
 Developed by Ernest Crudup Jr
