@@ -29,6 +29,28 @@ services:
       db:
         condition: service_healthy
 
+  # Container 3: Message Broker
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # Container 4: Background worker
+  worker:
+    build: .
+    # Notice: No ports exposed, because nobody talks to the worker directly via HTTP
+    command: celery -A app.core.tasks worker -B --loglevel=info --schedule=/tmp/celerybeat-schedule --pidfile=/tmp/celerybeat.pid
+    environment:
+      - DATABASE_URL=postgresql://ev_admin:supersecret@db:5432/ev_database
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    volumes:
+      - .:/code
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
 # Define the persistent storage drive
 volumes:
   postgres_data:

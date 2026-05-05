@@ -10,7 +10,7 @@ class Session(Base):
     station_id = Column(Integer, ForeignKey("stations.id"), nullable=False)
 
     # Tracking the battery percentage and time of the session
-    start_time = Column(DateTime, default=datetime.now(timezone.utc))
+    start_time = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     end_time = Column(DateTime, nullable=True)
 
     start_battery_level = Column(Integer)

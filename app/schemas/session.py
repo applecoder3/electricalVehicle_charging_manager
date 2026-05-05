@@ -14,13 +14,13 @@ class SessionCreate(SessionBase):
 
 
 class SessionEnd(BaseModel):
-    end_battery_level: int
+    end_battery_percentage: int
 
 class SessionResponse(SessionBase):
     
     id: int
     station_id: int
-    end_battery_level: Optional[int] = None
+    ending_battery_percentage: Optional[int] = None
     start_time: datetime
     end_time: Optional[datetime] = None
 

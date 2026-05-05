@@ -50,12 +50,12 @@ def end_charging_session(session_id: int, session_data: SessionEnd, db:Session =
     
     #Update the Session record 
     session.end_time = datetime.now(timezone.utc)
-    session.end_battery_level = session_data.end_battery_level
+    session.ending_battery_percentage = session_data.ending_battery_percentage
 
     #Checking to make sure battery is valid (the ending battery percentage is not lower than when it started and the ending battery percentage does not exceed 100 percent)
-    if session_data.end_battery_level < session.start_battery_level:
+    if session_data.ending_battery_percentage < session.start_battery_level:
         raise HTTPException(status_code=400, detail="Ending battery cannot be lower than starting battery.")
-    if session_data.end_battery_level > 100:
+    if session_data.ending_battery_percentage > 100:
         raise HTTPException(status_code=400, detail="Battery percentage cannot exceed 100.")
 
     # Find the parent station and update its status back to available
